@@ -4,7 +4,7 @@
 package test
 
 import (
-	"github.com/bitontop/gored/exchange"
+	"github.com/chz8494/gored/exchange"
 )
 
 type InitHandler struct {

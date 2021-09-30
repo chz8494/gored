@@ -3,7 +3,7 @@ package mxc
 import (
 	"fmt"
 
-	"github.com/bitontop/gored/exchange"
+	"github.com/chz8494/gored/exchange"
 )
 
 func (e *Mxc) LoadPublicData(operation *exchange.PublicOperation) error {

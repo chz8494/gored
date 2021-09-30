@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/bitontop/gored/exchange"
+	"github.com/chz8494/gored/exchange"
 )
 
 func (e *Ftx) DoAccountOperation(operation *exchange.AccountOperation) error {

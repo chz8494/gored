@@ -4,8 +4,8 @@ import (
 	"log"
 	"testing"
 
-	"github.com/bitontop/gored/exchange"
-	"github.com/bitontop/gored/pair"
+	"github.com/chz8494/gored/exchange"
+	"github.com/chz8494/gored/pair"
 )
 
 // Copyright (c) 2015-2019 Bitontop Technologies Inc.

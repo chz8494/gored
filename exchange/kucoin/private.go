@@ -6,9 +6,9 @@ import (
 	"log"
 	"strconv"
 
-	"github.com/bitontop/gored/coin"
+	"github.com/chz8494/gored/coin"
 
-	"github.com/bitontop/gored/exchange"
+	"github.com/chz8494/gored/exchange"
 )
 
 func (e *Kucoin) DoAccountOperation(operation *exchange.AccountOperation) error {

@@ -1,8 +1,8 @@
-[![Build Status](https://travis-ci.com/bitontop/gored.svg?branch=master)](https://travis-ci.com/bitontop/gored)
-[![Software License](https://img.shields.io/badge/License-MIT-orange.svg?style=flat-square)](https://github.com/bitontop/gored/blob/master/LICENSE)
-[![GoDoc](https://godoc.org/github.com/bitontop/gored?status.svg)](https://godoc.org/github.com/bitontop/gored)
-[![Coverage Status](http://codecov.io/github/bitontop/gored/coverage.svg?branch=master)](http://codecov.io/github/bitontop/gored?branch=master)
-[![Go Report Card](https://goreportcard.com/badge/github.com/bitontop/gored)](https://goreportcard.com/report/github.com/bitontop/gored)
+[![Build Status](https://travis-ci.com/chz8494/gored.svg?branch=master)](https://travis-ci.com/chz8494/gored)
+[![Software License](https://img.shields.io/badge/License-MIT-orange.svg?style=flat-square)](https://github.com/chz8494/gored/blob/master/LICENSE)
+[![GoDoc](https://godoc.org/github.com/chz8494/gored?status.svg)](https://godoc.org/github.com/chz8494/gored)
+[![Coverage Status](http://codecov.io/github/chz8494/gored/coverage.svg?branch=master)](http://codecov.io/github/chz8494/gored?branch=master)
+[![Go Report Card](https://goreportcard.com/badge/github.com/chz8494/gored)](https://goreportcard.com/report/github.com/chz8494/gored)
 
 A Realtime-Exchange-Data SDK is supporting multiple exchanges written in Golang.
 
@@ -37,7 +37,7 @@ When submitting a PR, please abide by our coding guidelines:
 
 + Code must adhere to the official Go [formatting](https://golang.org/doc/effective_go.html#formatting) guidelines (i.e. uses [gofmt](https://golang.org/cmd/gofmt/)).
 + Code must be documented adhering to the official Go [commentary](https://golang.org/doc/effective_go.html#commentary) guidelines.
-+ Code must adhere to our [coding style](https://github.com/bitontop/gored/blob/master/.github/CONTRIBUTING.md).
++ Code must adhere to our [coding style](https://github.com/chz8494/gored/blob/master/.github/CONTRIBUTING.md).
 + Pull requests need to be based on and opened against the `master` branch.
 
 ## Compiling instructions
@@ -51,7 +51,7 @@ gored is built using [Go Modules](https://github.com/golang/go/wiki/Modules) and
 Using Go Modules you now clone this repository **outside** your GOPATH
 
 ```bash
-git clone https://github.com/bitontop/gored.git
+git clone https://github.com/chz8494/gored.git
 cd gored
 go build
 mkdir ~/.gored
@@ -61,7 +61,7 @@ mkdir ~/.gored
 ### Windows
 
 ```bash
-git clone https://github.com/bitontop/gored.git
+git clone https://github.com/chz8494/gored.git
 cd gored
 go build
 

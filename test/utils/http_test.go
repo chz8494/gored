@@ -7,7 +7,7 @@ import (
 	"log"
 	"testing"
 
-	"github.com/bitontop/gored/utils"
+	"github.com/chz8494/gored/utils"
 )
 
 func Test_DigOutboundIP(t *testing.T) {

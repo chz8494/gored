@@ -3,8 +3,8 @@ package test
 import (
 	"testing"
 
-	"github.com/bitontop/gored/exchange"
-	"github.com/bitontop/gored/pair"
+	"github.com/chz8494/gored/exchange"
+	"github.com/chz8494/gored/pair"
 	// "../../exchange/okex"
 	// "../conf"
 )
@@ -99,8 +99,8 @@ func Test_Okex(t *testing.T) {
 	// 	Type:   exchange.SubAccountTransfer,
 	// 	Ex:     e.GetName(),
 	// 	Coin:   pair.Target,
-	// 	// SubTransferFrom: "bitontop", // ** Put subAccountId into 'SubTransferFrom' or 'SubTransferTo' **
-	// 	SubTransferTo:     "bitontop",
+	// 	// SubTransferFrom: "chz8494", // ** Put subAccountId into 'SubTransferFrom' or 'SubTransferTo' **
+	// 	SubTransferTo:     "chz8494",
 	// 	SubTransferAmount: "0.001",
 	// 	DebugMode:         true,
 	// }

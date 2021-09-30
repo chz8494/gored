@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"strconv"
 
-	"github.com/bitontop/gored/exchange"
+	"github.com/chz8494/gored/exchange"
 )
 
 func (e *Hitbtc) LoadPublicData(operation *exchange.PublicOperation) error {

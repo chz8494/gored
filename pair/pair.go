@@ -10,7 +10,7 @@ import (
 	"strconv"
 	"strings"
 
-	coin "github.com/bitontop/gored/coin"
+	coin "github.com/chz8494/gored/coin"
 	cmap "github.com/orcaman/concurrent-map"
 )
 

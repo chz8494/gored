@@ -2,7 +2,7 @@
 
 :+1: First off, thanks for taking the time to contribute! :+1:
 
-The following is a set of guidelines for contributing to GoRED and its packages, which are hosted in the [Bitontop Technologies Inc.](https://github.com/bitontop) on GitHub. These are mostly guidelines, not rules. Use your best judgment, and feel free to propose changes to this document in a pull request.
+The following is a set of guidelines for contributing to GoRED and its packages, which are hosted in the [Bitontop Technologies Inc.](https://github.com/chz8494) on GitHub. These are mostly guidelines, not rules. Use your best judgment, and feel free to propose changes to this document in a pull request.
 
 
 
@@ -12,7 +12,7 @@ Data Collection
 
     1.0.1 preparation
         1.1.0.1 fork gored to your repo
-        1.1.0.2 in VScode terminal, go get -u "github.com/bitontop/gored"
+        1.1.0.2 in VScode terminal, go get -u "github.com/chz8494/gored"
         1.1.0.3 using git pull to update gored code periodically
 
 1.1 Develop the Basic Functions
@@ -47,12 +47,12 @@ Data Collection
             in function Exchange, add new case exchange.["EXCHANGE NAME"]
             
         2.1.1.2gored/main.go:
-            add import "github.com/bitontop/gored/exchange/["exchange name"]"
+            add import "github.com/chz8494/gored/exchange/["exchange name"]"
             in function Init, add: Init["Exchange Name"](config)
             add function: func Init["Exchange Name"]
             
         2.1.1.3gored/initial/iniman.go
-            add import "github.com/bitontop/gored/exchange/["exchange name"]"
+            add import "github.com/chz8494/gored/exchange/["exchange name"]"
             in function Init, add new case exchange.["EXCHANGE NAME"]
             
         2.1.1.4gored/exchange/meta.go

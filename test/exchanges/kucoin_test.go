@@ -4,12 +4,12 @@ import (
 	"log"
 	"testing"
 
-	"github.com/bitontop/gored/coin"
-	"github.com/bitontop/gored/exchange"
-	"github.com/bitontop/gored/pair"
+	"github.com/chz8494/gored/coin"
+	"github.com/chz8494/gored/exchange"
+	"github.com/chz8494/gored/pair"
 
-	"github.com/bitontop/gored/exchange/kucoin"
-	"github.com/bitontop/gored/test/conf"
+	"github.com/chz8494/gored/exchange/kucoin"
+	"github.com/chz8494/gored/test/conf"
 	// "../../exchange/kucoin"
 	// "../conf"
 )
@@ -155,7 +155,7 @@ func InitKucoin() exchange.Exchange {
 	config := &exchange.Config{}
 	config.Source = exchange.EXCHANGE_API
 	// config.Source = exchange.JSON_FILE
-	// config.SourceURI = "https://raw.githubusercontent.com/bitontop/gored/master/data"
+	// config.SourceURI = "https://raw.githubusercontent.com/chz8494/gored/master/data"
 	// utils.GetCommonDataFromJSON(config.SourceURI)
 
 	conf.Exchange(exchange.KUCOIN, config)

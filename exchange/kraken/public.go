@@ -10,8 +10,8 @@ import (
 	"strconv"
 	"time"
 
-	exchange "github.com/bitontop/gored/exchange"
-	"github.com/bitontop/gored/utils"
+	exchange "github.com/chz8494/gored/exchange"
+	"github.com/chz8494/gored/utils"
 )
 
 /*************** PUBLIC  API ***************/

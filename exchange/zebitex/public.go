@@ -6,8 +6,8 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/bitontop/gored/exchange"
-	"github.com/bitontop/gored/utils"
+	"github.com/chz8494/gored/exchange"
+	"github.com/chz8494/gored/utils"
 )
 
 func (e *Zebitex) LoadPublicData(operation *exchange.PublicOperation) error {
