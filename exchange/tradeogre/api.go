@@ -142,7 +142,6 @@ func (e *Tradeogre) GetPairsData() error {
 	if err := json.Unmarshal([]byte(jsonSymbolsReturn), &pairsData); err != nil {
 		return fmt.Errorf("%s Get Pairs Json Unmarshal Err: %v %v", e.GetName(), err, jsonSymbolsReturn)
 	}
-
 	for _, pairs := range pairsData {
 		for key, _ := range pairs {
 			coinStrs := strings.Split(key, "-")
@@ -187,6 +186,22 @@ Step 3: Get Exchange Pair Code ex. symbol := e.GetPairCode(p)
 Step 4: Modify API Path(strRequestUrl)
 Step 5: Add Params - Depend on API request
 Step 6: Convert the response to Standard Maker struct*/
+/*
+func (e *Tradeogre) GetPrice(pair *pair.Pair) (string, error) {
+	pairsDetail := PairsDetail{}
+
+	strRequestUrl := "/ticker/"
+	strUrl := API_URL + strRequestUrl + pair.Name
+
+	jsonSymbolsReturn := exchange.HttpGetRequest(strUrl, nil)
+	if err := json.Unmarshal([]byte(jsonSymbolsReturn), &pairsDetail); err != nil {
+		return "error",fmt.Errorf("%s Get Coin detail Json Unmarshal Err: %v %v", e.GetName(), err, jsonSymbolsReturn)
+	}
+  fmt.Println(pairsDetail.Price)
+  return pairsDetail.Price,nil
+}
+*/
+
 func (e *Tradeogre) OrderBook(pair *pair.Pair) (*exchange.Maker, error) {
 
 	orderBook := OrderBook{}
@@ -256,13 +271,75 @@ func (e *Tradeogre) OrderBook(pair *pair.Pair) (*exchange.Maker, error) {
 	return maker, nil
 }
 
+/*
 func (e *Tradeogre) LoadPublicData(operation *exchange.PublicOperation) error {
 	return fmt.Errorf("LoadPublicData :: Operation type invalid: %+v", operation.Type)
 }
-
+*/
 /*************** Private API ***************/
 func (e *Tradeogre) DoAccountOperation(operation *exchange.AccountOperation) error {
 	return nil
+}
+
+func (e *Tradeogre) LoadPublicData(operation *exchange.PublicOperation) error {
+	switch operation.Type {
+	case exchange.GetTickerPrice:
+		switch operation.Wallet {
+		case exchange.SpotWallet:
+			return e.doTickerPrice(operation)
+		}
+	//default: fmt.Println("yes")
+	}
+	return fmt.Errorf("LoadPublicData :: Operation type invalid: %+v", operation.Type)
+}
+func (e *Tradeogre) doTickerPrice(operation *exchange.PublicOperation) error {
+	tickerPrice := PairsData{}
+	strRequestUrl := "/markets"
+	strUrl := API_URL + strRequestUrl
+	jsonTickerPrice := exchange.HttpGetRequest(strUrl, nil)
+	if err := json.Unmarshal([]byte(jsonTickerPrice), &tickerPrice); err != nil {
+		return fmt.Errorf("%s doTickerPrice Result Unmarshal Err: %v %s", e.GetName(), err, jsonTickerPrice)
+	}
+	//fmt.Println(tickerPrice)
+	if operation.DebugMode {
+		operation.RequestURI = API_URL
+		operation.CallResponce = jsonTickerPrice
+	}
+	operation.TickerPrice = []*exchange.TickerPriceDetail{}
+	for _, ticker := range tickerPrice {
+		for name,tp := range ticker {
+			price64,_ := strconv.ParseFloat(tp.Price, 64)
+			tpd := &exchange.TickerPriceDetail{
+				Pair:  e.GetPairBySymbol(name),
+				Price: price64,
+			}
+			operation.TickerPrice = append(operation.TickerPrice, tpd)
+		}
+	}
+
+	/* method to find specific ticker price
+	operation.TickerPrice = []*exchange.TickerPriceDetail{}
+	pairsDetail := PairsDetail{}
+
+	strRequestUrl := "/ticker/BTC-WOW"
+	strUrl := API_URL + strRequestUrl
+	fmt.Println(strUrl)
+	jsonSymbolsReturn := exchange.HttpGetRequest(strUrl, nil)
+	fmt.Println(jsonSymbolsReturn)
+	if err := json.Unmarshal([]byte(jsonSymbolsReturn), &pairsDetail); err != nil {
+		return fmt.Errorf("%s Get Coin detail Json Unmarshal Err: %v %v", e.GetName(), err, jsonSymbolsReturn)
+	}
+	y,_ := strconv.ParseFloat(pairsDetail.Price, 64)
+	x := &exchange.TickerPriceDetail{
+		Pair: pair.GetPairByKey("BTC|WOW"),
+		Price: y,
+	}
+	operation.TickerPrice = append(operation.TickerPrice, x)
+	//fmt.Println(operation.TickerPrice[0])
+	//operation.TickerPrice[0].Price,_ = strconv.ParseFloat(pairsDetail.Price, 64)
+  fmt.Println(pairsDetail.Price)
+	*/
+  return nil
 }
 
 func (e *Tradeogre) UpdateAllBalances() {
@@ -282,7 +359,6 @@ func (e *Tradeogre) UpdateAllBalances() {
 		log.Printf("%s UpdateAllBalances Failed: %v", e.GetName(), jsonBalanceReturn)
 		return
 	}
-
 	for key, data := range accountBalance.Balances {
 		c := e.GetCoinBySymbol(key)
 		if c != nil {
@@ -417,11 +493,43 @@ func (e *Tradeogre) ListOrders() ([]*exchange.Order, error) {
 
 	mapParams := make(map[string]string)
 	// mapParams["market"] = "BTC-RVN"
+  var listOrders []Order
+	jsonListOrders := e.ApiKeyRequest("POST", strRequest, mapParams)
 
-	json := e.ApiKeyRequest("POST", strRequest, mapParams)
-	log.Printf("json:%+v", json)
+	if err := json.Unmarshal([]byte(jsonListOrders), &listOrders); err != nil {
+		return nil, fmt.Errorf("%s ListOrders Json Unmarshal Err: %v %v\n", e.GetName(), err, jsonListOrders)
+	}
+	var res []*exchange.Order
+	for _, orderItem := range listOrders {
+		pair := e.GetPairBySymbol(orderItem.Market)
+		rate, _ := strconv.ParseFloat(orderItem.Price, 64)
+		quantity, _ := strconv.ParseFloat(orderItem.Quantity, 64)
+		Timestamp := int64(orderItem.Date)
 
-	return nil, nil
+		order := &exchange.Order{
+			Pair:         pair,
+			OrderID:      string(orderItem.UUID),
+			Timestamp:    Timestamp,
+			Rate:         rate,
+			Quantity:     quantity,
+			Status:       exchange.New,
+			JsonResponse: jsonListOrders,
+		}
+
+		switch orderItem.Type {
+		case "buy":
+			order.Direction = exchange.Buy
+		case "sell":
+			order.Direction = exchange.Sell
+		}
+
+		res = append(res, order)
+	}
+  //fmt.Println(res)
+  //fmt.Println(listOrders)
+//	log.Printf("json:%+v", json)
+//        return jsonListOrders, nil
+	return res, nil
 }
 
 func (e *Tradeogre) CancelOrder(order *exchange.Order) error {

@@ -111,6 +111,14 @@ type Order struct {
 	Error        error
 }
 
+type Tradeogre_Order struct {
+	UUID      string `json:"uuid"`
+	Date      int `json:"date"`
+	Type      string `json:"type"`
+	Market    string `json:"market"`
+	Price     string `json:"price"`
+	Quantity  string `json:"quantity"`
+}
 type Maker struct {
 	WorkerIP        string     `bson:"workerip"`
 	WorkerDeadTS    float64    `bson:"workerdeadts"`

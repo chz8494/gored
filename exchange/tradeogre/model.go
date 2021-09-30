@@ -48,3 +48,12 @@ type OrderStatus struct {
 type CancelOrder struct {
 	Success bool `json:"success"`
 }
+
+type Order struct {
+	UUID      string `json:"uuid"`
+	Date      int `json:"date"`
+	Type      string `json:"type"`
+	Market    string `json:"market"`
+	Price     string `json:"price"`
+	Quantity  string `json:"quantity"`
+}
