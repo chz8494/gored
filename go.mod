@@ -1,4 +1,4 @@
-module github.com/bitontop/gored
+module github.com/chz8494/gored
 
 go 1.13
 
