@@ -1,4 +1,4 @@
-module github.com/chz8494/gored
+module github.com/bitontop/gored
 
 go 1.13
 
@@ -9,3 +9,5 @@ require (
 	github.com/tendermint/tendermint v0.33.2
 	golang.org/x/tools v0.0.0-20200323164354-18ea2c8f7359 // indirect
 )
+
+replace github.com/bitontop/gored => github.com/chz8494/gored
