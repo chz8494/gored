@@ -312,6 +312,10 @@ func (e *Tradeogre) doTickerPrice(operation *exchange.PublicOperation) error {
 			tpd := &exchange.TickerPriceDetail{
 				Pair:  e.GetPairBySymbol(name),
 				Price: price64,
+				Initialprice: tp.Initialprice,
+				High:  tp.High,
+				Low:   tp.Low,
+				Volume: tp.Volume,
 			}
 			operation.TickerPrice = append(operation.TickerPrice, tpd)
 		}
