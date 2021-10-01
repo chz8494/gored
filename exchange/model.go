@@ -415,6 +415,10 @@ type KlineDetail struct {
 type TickerPriceDetail struct {
 	Pair  *pair.Pair `json:"pair"`
 	Price float64    `json:"price"`
+	Initialprice string `json:"initialprice"`
+	High         string `json:"high"`
+	Low          string `json:"low"`
+	Volume       string `json:"volume"`
 }
 
 type TradeDetail struct {
