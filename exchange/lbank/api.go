@@ -25,9 +25,9 @@ import (
 	"strings"
 	"time"
 
-	"github.com/bitontop/gored/coin"
-	"github.com/bitontop/gored/exchange"
-	"github.com/bitontop/gored/pair"
+	"github.com/chz8494/gored/coin"
+	"github.com/chz8494/gored/exchange"
+	"github.com/chz8494/gored/pair"
 )
 
 const (

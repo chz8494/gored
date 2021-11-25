@@ -9,8 +9,8 @@ import (
 	"fmt"
 	"time"
 
-	exchange "github.com/bitontop/gored/exchange"
-	utils "github.com/bitontop/gored/utils"
+	exchange "github.com/chz8494/gored/exchange"
+	utils "github.com/chz8494/gored/utils"
 )
 
 /*************** PUBLIC  API ***************/

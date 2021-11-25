@@ -3,8 +3,8 @@ package test
 import (
 	"testing"
 
-	"github.com/bitontop/gored/exchange"
-	"github.com/bitontop/gored/pair"
+	"github.com/chz8494/gored/exchange"
+	"github.com/chz8494/gored/pair"
 	// "../../exchange/bw"
 	// "../conf"
 )

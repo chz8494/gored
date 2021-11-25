@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/bitontop/gored/exchange"
-	"github.com/bitontop/gored/utils"
+	"github.com/chz8494/gored/exchange"
+	"github.com/chz8494/gored/utils"
 )
 
 /*************** PUBLIC  API ***************/

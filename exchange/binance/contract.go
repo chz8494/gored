@@ -8,7 +8,7 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/bitontop/gored/exchange"
+	"github.com/chz8494/gored/exchange"
 )
 
 func (e *Binance) doContractGetOpenOrder(operation *exchange.AccountOperation) error {

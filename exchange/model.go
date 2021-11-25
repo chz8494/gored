@@ -7,8 +7,8 @@ package exchange
 import (
 	"time"
 
-	"github.com/bitontop/gored/coin"
-	"github.com/bitontop/gored/pair"
+	"github.com/chz8494/gored/coin"
+	"github.com/chz8494/gored/pair"
 )
 
 type Update struct {
@@ -415,6 +415,10 @@ type KlineDetail struct {
 type TickerPriceDetail struct {
 	Pair  *pair.Pair `json:"pair"`
 	Price float64    `json:"price"`
+	Initialprice string `json:"initialprice"`
+	High         string `json:"high"`
+	Low          string `json:"low"`
+	Volume       string `json:"volume"`
 }
 
 type TradeDetail struct {

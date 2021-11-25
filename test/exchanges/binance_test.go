@@ -8,8 +8,8 @@ import (
 	"log"
 	"testing"
 
-	"github.com/bitontop/gored/exchange"
-	"github.com/bitontop/gored/pair"
+	"github.com/chz8494/gored/exchange"
+	"github.com/chz8494/gored/pair"
 	// "../../exchange/binance"
 	// "../conf"
 )
@@ -45,7 +45,7 @@ func Test_Binance(t *testing.T) {
 
 	// var err error
 
-	// SubBalances(e, "example@bitontop.com")
+	// SubBalances(e, "example@chz8494.com")
 	// SubAccountList(e)
 	// SubAllBalances(e)
 
@@ -273,8 +273,8 @@ func Test_Binance(t *testing.T) {
 	// 	Type:              exchange.SubAccountTransfer,
 	// 	Ex:                e.GetName(),
 	// 	Coin:              pair.Target,
-	// 	SubTransferFrom:   "exapi@bitontop.com",
-	// 	SubTransferTo:     "tonywei@bitontop.com",
+	// 	SubTransferFrom:   "exapi@chz8494.com",
+	// 	SubTransferTo:     "tonywei@chz8494.com",
 	// 	SubTransferAmount: "0.01",
 	// 	DebugMode:         true,
 	// }

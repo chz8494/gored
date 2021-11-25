@@ -7,12 +7,12 @@ package test
 import (
 	"log"
 
-	"github.com/bitontop/gored/coin"
-	"github.com/bitontop/gored/exchange"
-	"github.com/bitontop/gored/initial"
-	"github.com/bitontop/gored/pair"
-	"github.com/bitontop/gored/test/conf"
-	"github.com/bitontop/gored/utils"
+	"github.com/chz8494/gored/coin"
+	"github.com/chz8494/gored/exchange"
+	"github.com/chz8494/gored/initial"
+	"github.com/chz8494/gored/pair"
+	"github.com/chz8494/gored/test/conf"
+	"github.com/chz8494/gored/utils"
 	"github.com/davecgh/go-spew/spew"
 )
 
@@ -22,7 +22,7 @@ func InitEx(exName exchange.ExchangeName) exchange.Exchange {
 	config := &exchange.Config{}
 	config.Source = exchange.EXCHANGE_API
 	// config.Source = exchange.JSON_FILE
-	// config.SourceURI = "https://raw.githubusercontent.com/bitontop/gored/master/data"
+	// config.SourceURI = "https://raw.githubusercontent.com/chz8494/gored/master/data"
 	// utils.GetCommonDataFromJSON(config.SourceURI)
 	conf.Exchange(exName, config)
 
@@ -41,7 +41,7 @@ func InitExFromJson(exName exchange.ExchangeName) exchange.Exchange {
 	config := &exchange.Config{}
 	// config.Source = exchange.EXCHANGE_API
 	config.Source = exchange.JSON_FILE
-	config.SourceURI = "https://raw.githubusercontent.com/bitontop/gored/master/data"
+	config.SourceURI = "https://raw.githubusercontent.com/chz8494/gored/master/data"
 	utils.GetCommonDataFromJSON(config.SourceURI)
 	conf.Exchange(exName, config)
 

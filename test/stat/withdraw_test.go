@@ -8,7 +8,7 @@ import (
 	"log"
 	"testing"
 
-	"github.com/bitontop/gored/pair"
+	"github.com/chz8494/gored/pair"
 	// "github.com/davecgh/go-spew/spew"
 )
 
@@ -18,7 +18,7 @@ func Test_WithdrawEnableExchanges(t *testing.T) {
 	// coin.Init()
 	// pair.Init()
 
-	// utils.GetCommonDataFromJSON("https://raw.githubusercontent.com/bitontop/gored/master/data") //e.config.SourceURI)
+	// utils.GetCommonDataFromJSON("https://raw.githubusercontent.com/chz8494/gored/master/data") //e.config.SourceURI)
 
 	// exman := exchange.CreateExchangeManager()
 	// exchanges := exman.GetSupportExchanges()

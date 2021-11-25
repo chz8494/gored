@@ -9,13 +9,13 @@ import (
 	"log"
 	"sync"
 
-	"github.com/bitontop/gored/coin"
-	"github.com/bitontop/gored/exchange"
-	"github.com/bitontop/gored/pair"
-	"github.com/bitontop/gored/test/conf"
+	"github.com/chz8494/gored/coin"
+	"github.com/chz8494/gored/exchange"
+	"github.com/chz8494/gored/pair"
+	"github.com/chz8494/gored/test/conf"
 
-	initial "github.com/bitontop/gored/initial"
-	utils "github.com/bitontop/gored/utils"
+	initial "github.com/chz8494/gored/initial"
+	utils "github.com/chz8494/gored/utils"
 	// "github.com/davecgh/go-spew/spew"
 )
 
@@ -26,7 +26,7 @@ func Init() *InitHandler {
 	coin.Init()
 	pair.Init()
 
-	utils.GetCommonDataFromJSON("https://raw.githubusercontent.com/bitontop/gored/master/data") //e.config.SourceURI)
+	utils.GetCommonDataFromJSON("https://raw.githubusercontent.com/chz8494/gored/master/data") //e.config.SourceURI)
 
 	handler.ExMan = exchange.CreateExchangeManager()
 	exchanges := handler.ExMan.GetSupportExchanges()
@@ -64,7 +64,7 @@ func initEx(wg *sync.WaitGroup, name exchange.ExchangeName, initMan *initial.Ini
 	config := &exchange.Config{}
 	config.ExName = name
 	config.Source = exchange.JSON_FILE
-	config.SourceURI = "https://raw.githubusercontent.com/bitontop/gored/master/data"
+	config.SourceURI = "https://raw.githubusercontent.com/chz8494/gored/master/data"
 
 	conf.Exchange(name, config)
 

@@ -8,7 +8,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/bitontop/gored/exchange"
+	"github.com/chz8494/gored/exchange"
 )
 
 func (e *Huobi) DoAccountOperation(operation *exchange.AccountOperation) error {
