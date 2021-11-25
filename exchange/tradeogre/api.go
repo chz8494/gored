@@ -278,6 +278,30 @@ func (e *Tradeogre) LoadPublicData(operation *exchange.PublicOperation) error {
 */
 /*************** Private API ***************/
 func (e *Tradeogre) DoAccountOperation(operation *exchange.AccountOperation) error {
+	switch operation.Type {
+	case exchange.GetOrderHistory:
+		switch operation.Wallet {
+		case exchange.SpotWallet:
+			return e.doAccountHistory(operation)
+		}
+	//default: fmt.Println("yes")
+	}
+	return fmt.Errorf("LoadPublicData :: Operation type invalid: %+v", operation.Type)
+}
+
+func (e *Tradeogre) doAccountHistory(operation *exchange.AccountOperation) error {
+	if e.API_KEY == "" || e.API_SECRET == "" {
+		return fmt.Errorf("%s API Key or Secret Key are nil", e.GetName())
+	}
+	tickerPrice := PairsData{}
+	strRequest := "/account/market/history"
+	mapParams := make(map[string]string)
+	mapParams["market"] = "BTC-WOW"
+	jsonOrderHistory := e.ApiKeyRequest("POST", strRequest, mapParams)
+	fmt.Println(jsonOrderHistory)
+	if err := json.Unmarshal([]byte(jsonOrderHistory), &tickerPrice); err != nil {
+		return fmt.Errorf("%s doTickerPrice Result Unmarshal Err: %v %s", e.GetName(), err, jsonOrderHistory)
+	}
 	return nil
 }
 
@@ -317,7 +341,7 @@ func (e *Tradeogre) doTickerPrice(operation *exchange.PublicOperation) error {
 				Low:   tp.Low,
 				Volume: tp.Volume,
 			}
-			operation.TickerPrice = append(operation.TickerPrice, tpd)
+		operation.TickerPrice = append(operation.TickerPrice, tpd)
 		}
 	}
 
@@ -443,6 +467,7 @@ func (e *Tradeogre) LimitBuy(pair *pair.Pair, quantity, rate float64) (*exchange
 		Status:       exchange.New,
 		JsonResponse: jsonPlaceReturn,
 	}
+// example json response: {"success":true,"uuid":"c07ea117-33ea-4f45-6c18-a6d195ae4bdb","bnewbalavail":"0.00040764","snewbalavail":"1850.37346666"}
 
 	return order, nil
 }
