@@ -341,7 +341,7 @@ func (e *Tradeogre) doTickerPrice(operation *exchange.PublicOperation) error {
 				Low:   tp.Low,
 				Volume: tp.Volume,
 			}
-			operation.TickerPrice = append(operation.TickerPrice, tpd)
+		operation.TickerPrice = append(operation.TickerPrice, tpd)
 		}
 	}
 
