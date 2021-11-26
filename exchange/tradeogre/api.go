@@ -284,8 +284,14 @@ func (e *Tradeogre) DoAccountOperation(operation *exchange.AccountOperation) err
 		case exchange.SpotWallet:
 			return e.doAccountHistory(operation)
 		}
+	case exchange.Balance:
+		switch operation.Wallet {
+		case exchange.SpotWallet:
+			return e.doAccountBalance(operation)
+		}
 	//default: fmt.Println("yes")
 	}
+
 	return fmt.Errorf("LoadPublicData :: Operation type invalid: %+v", operation.Type)
 }
 
@@ -302,6 +308,39 @@ func (e *Tradeogre) doAccountHistory(operation *exchange.AccountOperation) error
 	if err := json.Unmarshal([]byte(jsonOrderHistory), &tickerPrice); err != nil {
 		return fmt.Errorf("%s doTickerPrice Result Unmarshal Err: %v %s", e.GetName(), err, jsonOrderHistory)
 	}
+	return nil
+}
+
+func (e *Tradeogre) doAccountBalance(operation *exchange.AccountOperation) error {
+	if e.API_KEY == "" || e.API_SECRET == "" {
+		return fmt.Errorf("%s API Key or Secret Key are nil", e.GetName())
+	}
+	accountBalance := AccountBalances{}
+	strRequest := "/account/balances"
+
+	jsonBalanceReturn := e.ApiKeyRequest("GET", strRequest, make(map[string]string))
+	if err := json.Unmarshal([]byte(jsonBalanceReturn), &accountBalance); err != nil {
+		return fmt.Errorf("%s UpdateAllBalances Json Unmarshal Err: %v %v", e.GetName(), err, jsonBalanceReturn)
+	} else if !accountBalance.Success {
+		return fmt.Errorf("%s UpdateAllBalances Failed: %v", e.GetName(), jsonBalanceReturn)
+	}
+	for key, data := range accountBalance.Balances {
+		c := e.GetCoinBySymbol(key)
+		//fmt.Println(c)
+		if c != nil {
+			freeBalance, err := strconv.ParseFloat(data, 64)
+			if err != nil {
+				return fmt.Errorf("%s balance parse error: %v, %v", e.GetName(), err, data)
+			}
+			balanceMap.Set(c.Code, freeBalance)
+		}
+	}
+	if operation.DebugMode {
+		operation.RequestURI = API_URL
+		operation.CallResponce = jsonBalanceReturn
+	}
+	operation.Balances = accountBalance.Balances
+	//fmt.Println(accountBalance.Balances)
 	return nil
 }
 
@@ -341,9 +380,13 @@ func (e *Tradeogre) doTickerPrice(operation *exchange.PublicOperation) error {
 				Low:   tp.Low,
 				Volume: tp.Volume,
 			}
-		operation.TickerPrice = append(operation.TickerPrice, tpd)
+			operation.TickerPrice = append(operation.TickerPrice, tpd)
 		}
+		//operation.TickerPrice = append(operation.TickerPrice, tpd)
 	}
+	/*for _,i := range 	operation.TickerPrice{
+		fmt.Println(operation.TickerPrice)
+	}*/
 
 	/* method to find specific ticker price
 	operation.TickerPrice = []*exchange.TickerPriceDetail{}
@@ -372,8 +415,7 @@ func (e *Tradeogre) doTickerPrice(operation *exchange.PublicOperation) error {
 
 func (e *Tradeogre) UpdateAllBalances() {
 	if e.API_KEY == "" || e.API_SECRET == "" {
-		log.Printf("%s API Key or Secret Key are nil.", e.GetName())
-		return
+	  fmt.Errorf("%s API Key or Secret Key are nil", e.GetName())
 	}
 
 	accountBalance := AccountBalances{}
@@ -381,19 +423,16 @@ func (e *Tradeogre) UpdateAllBalances() {
 
 	jsonBalanceReturn := e.ApiKeyRequest("GET", strRequest, make(map[string]string))
 	if err := json.Unmarshal([]byte(jsonBalanceReturn), &accountBalance); err != nil {
-		log.Printf("%s UpdateAllBalances Json Unmarshal Err: %v %v", e.GetName(), err, jsonBalanceReturn)
-		return
+		fmt.Errorf("%s UpdateAllBalances Json Unmarshal Err: %v %v", e.GetName(), err, jsonBalanceReturn)
 	} else if !accountBalance.Success {
-		log.Printf("%s UpdateAllBalances Failed: %v", e.GetName(), jsonBalanceReturn)
-		return
+		fmt.Errorf("%s UpdateAllBalances Failed: %v", e.GetName(), jsonBalanceReturn)
 	}
 	for key, data := range accountBalance.Balances {
 		c := e.GetCoinBySymbol(key)
 		if c != nil {
 			freeBalance, err := strconv.ParseFloat(data, 64)
 			if err != nil {
-				log.Printf("%s balance parse error: %v, %v", e.GetName(), err, data)
-				return
+				fmt.Errorf("%s balance parse error: %v, %v", e.GetName(), err, data)
 			}
 			balanceMap.Set(c.Code, freeBalance)
 		}

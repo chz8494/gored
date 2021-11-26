@@ -269,6 +269,7 @@ type AccountOperation struct {
 	//#Balance Listed
 	//Coin = nil
 	BalanceList []AssetBalance `json:"balance_list"`
+	Balances map[string]string `json:"balances"`
 
 	// #OpenOrder, OrderHistory
 	OpenOrders   []*Order
