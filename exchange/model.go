@@ -197,6 +197,7 @@ const (
 	//Trade (Private Action)
 	PlaceOrder     OperationType = "PlaceOrder"
 	CancelOrder    OperationType = "CancelOrder"
+	CancelOrderID    OperationType = "CancelOrderID"
 	GetOrderStatus OperationType = "GetOrderStatus"
 
 	//User (Private Action)
