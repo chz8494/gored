@@ -631,7 +631,7 @@ func (e *Tradeogre) CancelOrderID(orderID string) error {
 
 	cancelOrder := CancelOrder{}
 	strRequest := "/order/cancel"
-
+	mapParams := make(map[string]string)
 	mapParams["uuid"] = orderID
 
 	jsonCancelOrder := e.ApiKeyRequest("POST", strRequest, mapParams)
@@ -640,10 +640,6 @@ func (e *Tradeogre) CancelOrderID(orderID string) error {
 	} else if !cancelOrder.Success {
 		return fmt.Errorf("%s CancelOrder Failed: %v", e.GetName(), jsonCancelOrder)
 	}
-
-	order.Status = exchange.Canceling
-	order.CancelStatus = jsonCancelOrder
-
 	return nil
 }
 
