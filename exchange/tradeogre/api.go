@@ -624,6 +624,29 @@ func (e *Tradeogre) CancelOrder(order *exchange.Order) error {
 	return nil
 }
 
+func (e *Tradeogre) CancelOrderID(orderID string) error {
+	if e.API_KEY == "" || e.API_SECRET == "" {
+		return fmt.Errorf("%s API Key or Secret Key are nil", e.GetName())
+	}
+
+	cancelOrder := CancelOrder{}
+	strRequest := "/order/cancel"
+
+	mapParams["uuid"] = orderID
+
+	jsonCancelOrder := e.ApiKeyRequest("POST", strRequest, mapParams)
+	if err := json.Unmarshal([]byte(jsonCancelOrder), &cancelOrder); err != nil {
+		return fmt.Errorf("%s CancelOrder Json Unmarshal Err: %v %v", e.GetName(), err, jsonCancelOrder)
+	} else if !cancelOrder.Success {
+		return fmt.Errorf("%s CancelOrder Failed: %v", e.GetName(), jsonCancelOrder)
+	}
+
+	order.Status = exchange.Canceling
+	order.CancelStatus = jsonCancelOrder
+
+	return nil
+}
+
 func (e *Tradeogre) CancelAllOrder() error {
 	return nil
 }
