@@ -275,6 +275,7 @@ type AccountOperation struct {
 	// #OpenOrder, OrderHistory
 	OpenOrders   []*Order
 	OrderHistory []*Order
+	CancelOrderID    string
 
 	// #GetWithdrawal/DepositHistory
 	WithdrawalHistory []*WDHistory

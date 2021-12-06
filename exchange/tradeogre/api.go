@@ -289,6 +289,11 @@ func (e *Tradeogre) DoAccountOperation(operation *exchange.AccountOperation) err
 		case exchange.SpotWallet:
 			return e.doAccountBalance(operation)
 		}
+	case exchange.CancelOrderID:
+		switch operation.Wallet {
+		case exchange.SpotWallet:
+			return e.CancelOrderID(operation)
+		}
 	//default: fmt.Println("yes")
 	}
 
@@ -341,6 +346,25 @@ func (e *Tradeogre) doAccountBalance(operation *exchange.AccountOperation) error
 	}
 	operation.Balances = accountBalance.Balances
 	//fmt.Println(accountBalance.Balances)
+	return nil
+}
+
+func (e *Tradeogre) CancelOrderID(operation *exchange.AccountOperation) error {
+	if e.API_KEY == "" || e.API_SECRET == "" {
+		return fmt.Errorf("%s API Key or Secret Key are nil", e.GetName())
+	}
+
+	cancelOrder := CancelOrder{}
+	strRequest := "/order/cancel"
+	mapParams := make(map[string]string)
+	mapParams["uuid"] = operation.CancelOrderID
+
+	jsonCancelOrder := e.ApiKeyRequest("POST", strRequest, mapParams)
+	if err := json.Unmarshal([]byte(jsonCancelOrder), &cancelOrder); err != nil {
+		return fmt.Errorf("%s CancelOrder Json Unmarshal Err: %v %v", e.GetName(), err, jsonCancelOrder)
+	} else if !cancelOrder.Success {
+		return fmt.Errorf("%s CancelOrder Failed: %v", e.GetName(), jsonCancelOrder)
+	}
 	return nil
 }
 
@@ -621,25 +645,6 @@ func (e *Tradeogre) CancelOrder(order *exchange.Order) error {
 	order.Status = exchange.Canceling
 	order.CancelStatus = jsonCancelOrder
 
-	return nil
-}
-
-func (e *Tradeogre) CancelOrderID(orderID string) error {
-	if e.API_KEY == "" || e.API_SECRET == "" {
-		return fmt.Errorf("%s API Key or Secret Key are nil", e.GetName())
-	}
-
-	cancelOrder := CancelOrder{}
-	strRequest := "/order/cancel"
-	mapParams := make(map[string]string)
-	mapParams["uuid"] = orderID
-
-	jsonCancelOrder := e.ApiKeyRequest("POST", strRequest, mapParams)
-	if err := json.Unmarshal([]byte(jsonCancelOrder), &cancelOrder); err != nil {
-		return fmt.Errorf("%s CancelOrder Json Unmarshal Err: %v %v", e.GetName(), err, jsonCancelOrder)
-	} else if !cancelOrder.Success {
-		return fmt.Errorf("%s CancelOrder Failed: %v", e.GetName(), jsonCancelOrder)
-	}
 	return nil
 }
 
