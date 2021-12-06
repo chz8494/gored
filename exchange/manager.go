@@ -61,7 +61,6 @@ type Exchange interface {
 	ListOrders() ([]*Order, error)
 
 	CancelOrder(order *Order) error
-	CancelOrderID(order string) error
 	CancelAllOrder() error //TODO need to impl cancel all order for exchanges
 
 	/***** Exchange Constraint *****/
